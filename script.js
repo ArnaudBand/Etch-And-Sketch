@@ -1,3 +1,6 @@
+/* Creating the elements that will be used in the program. */
+
+
 const container = document.querySelector('.container');
 const btnBlack = document.createElement('button');
 const btnGray = document.createElement('button');
@@ -7,10 +10,17 @@ const btnWhite = document.createElement('button');
 const buttonContainer = document.querySelector('.buttons');
 
 
-function createDivs(col, row){
+/**
+ * Create a grid of divs
+ * @param col - The number of columns in the grid.
+ * @param row - The number of rows in the grid.
+ */
+
+
+function createGrids(col, row){
     for(let i = 0; i < (col * row); i++){
         const div = document.createElement('div');
-        div.style.border = '1px solid red';
+        div.style.border = '1px solid black';
         container.style.gridTemplateColumns = `repeat(${col}, 1fr)`;
         container.style.gridTemplateRows = `repeat(${row}, 1fr)`;
         container.appendChild(div).classList.add('box')
@@ -18,7 +28,12 @@ function createDivs(col, row){
 }
 
 
-createDivs(16, 16);
+createGrids(16, 16);
+
+/**
+ * It adds a button to the page that changes the color of the boxes to gray when clicked.
+ */
+
 
 function grayColor() {
     const boxs = container.querySelectorAll('.box');
@@ -34,6 +49,11 @@ function grayColor() {
 
 grayColor()
 
+/**
+ * It adds a button to the page that changes the color of all the boxes to white when clicked.
+ */
+
+
 function whiteColor() {
     const boxs = container.querySelectorAll('.box');
     btnWhite.textContent = 'White';
@@ -47,6 +67,12 @@ function whiteColor() {
 
 
 whiteColor()
+
+/**
+ * It adds a button to the page that changes the background color of all the boxes to black when
+ * clicked.
+ */
+
 
 function blackColor() {
     const boxs = container.querySelectorAll('.box');
@@ -62,26 +88,39 @@ function blackColor() {
 blackColor()
 
 
+/**
+ * It creates a button that when clicked will change the background color of all the boxes to a random
+ * color.
+ */
+
+
 function rgbColor() {
     const boxs = container.querySelectorAll('.box');
     btnRGB.textContent = 'RGB';
     btnRGB.addEventListener('click', () => {
         boxs.forEach(box => box.addEventListener('mouseover', ()=>{
-            let red = Math.floor(Math.random() * 255);
-            let blue = Math.floor(Math.random() * 255);
-            let green = Math.floor(Math.random() * 255);
-            box.style.background = `rgb(${red}, ${blue}, ${green})`;
+            let rRandom = Math.floor(Math.random() * 255);
+            let bRandom = Math.floor(Math.random() * 255);
+            let gRandom = Math.floor(Math.random() * 255);
+            box.style.background = `rgb(${rRandom}, ${bRandom}, ${gRandom})`;
         }))
     })
     buttonContainer.appendChild(btnRGB).classList.add('btn')
 }
 
 rgbColor()
+/**
+ * It resets the grid and creates a new grid with the user input.
+ */
 
 function reset() {
     const boxs = container.querySelectorAll('.box');
     boxs.forEach(box => box.remove())
 }
+
+/**
+ * This function creates a button that allows the user to change the size of the grid
+ */
 
 function reSize() {
     btnSize.textContent = 'GRID SIZE';
@@ -89,17 +128,17 @@ function reSize() {
         let user = prompt('Type the size of columns and rows');
         if(user === null || user < 1) {
             reset();
-            createDivs(16, 16);
+            createGrids(16, 16);
             blackColor();
             grayColor();
-            rgbColor()
+            rgbColor();
         }
         else {
             reset();
-            createDivs(user, user);
+            createGrids(user, user);
             blackColor();
             grayColor();
-            rgbColor()
+            rgbColor();
         }
     })
     buttonContainer.appendChild(btnSize).classList.add('btn')
